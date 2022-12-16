@@ -21,15 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+// Route::prefix('admin')->middleware('guest:admin')->group(
 Route::prefix('admin')->group(
     // ['middleware' => 'auth:admin'],
     function () {
         Route::post('register', [AdminController::class, 'adminRegister']);
         Route::post('login', [AdminController::class, 'adminLogin']);
 
-        Route::group(['middleware' => 'jwt.verify'], function () {
+        Route::group(['middleware' => ['assign.guard:admin', 'jwt.verify']], function () {
             Route::post('logout', [AdminController::class, 'adminLogout']);
-            Route::post('me', [AdminController::class, 'getAdmin']);
+            Route::get('me', [AdminController::class, 'getAdmin']);
         });
     }
 );
@@ -40,9 +41,10 @@ Route::prefix('user')->group(
         Route::post('register', [UserController::class, 'userRegister']);
         Route::post('login', [UserController::class, 'userLogin']);
 
-        Route::group(['middleware' => 'jwt.verify'], function () {
+        // Route::group(['middleware' => ['assign.guard:user', 'jwt.auth']], function () {
+        Route::group(['middleware' => ['assign.guard:user', 'jwt.verify']], function () {
             Route::post('logout', [UserController::class, 'userLogout']);
-            Route::post('me', [UserController::class, 'getUser']);
+            Route::get('me', [UserController::class, 'getUser']);
         });
     }
 );

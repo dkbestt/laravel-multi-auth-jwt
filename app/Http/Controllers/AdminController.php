@@ -62,9 +62,7 @@ class AdminController extends Controller
     public function getAdmin()
     {
         $user = JWTAuth::parseToken()->authenticate();
-
         $admin = auth()->guard('admin')->user();
-        // dd($admin, $user);
         return response()->json([
             "success" => true,
             "message" => "Get Authenticate admin",

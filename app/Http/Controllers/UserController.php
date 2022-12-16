@@ -60,8 +60,9 @@ class UserController extends Controller
 
     public function getUser()
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        // $user = auth()->guard('user')->user();
+        // $user = JWTAuth::parseToken()->authenticate();
+        // $user = Auth::guard('user')->user();
+        $user = auth()->guard('user')->user();
         if ($user) {
             # code...
             return response()->json([
