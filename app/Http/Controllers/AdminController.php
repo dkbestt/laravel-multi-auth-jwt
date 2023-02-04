@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendMailable;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use JWTAuth;
 
 class AdminController extends Controller
@@ -47,15 +49,29 @@ class AdminController extends Controller
             return response()->json([
                 "success" => false,
                 "data" => null,
-                "message" => "Invalid credettials"
+                "message" => "Invalid credentials"
             ]);
         } else {
-            return response()->json([
-                "success" => true,
-                "message" => "Login Done",
-                "data" => $admin,
-                "token" => $token
-            ]);
+            try {
+                Mail::to("divyangkanpariya083@gmail.com")->send(new SendMailable($admin->name));
+                return response()->json([
+                    "success" => true,
+                    "message" => "Login Done",
+                    "data" => $admin,
+                    "token" => $token
+                ]);
+            } catch (\Throwable $th) {
+                if ($th->getCode() == 554) {
+                    return response()->json([
+                        "success" => false,
+                        "message" => "Invalid Email Address"
+                    ], 500);
+                }
+                return response()->json([
+                    "success" => false,
+                    "message" => $th->getMessage()
+                ], 500);
+            }
         }
     }
 
@@ -65,7 +81,7 @@ class AdminController extends Controller
         $admin = auth()->guard('admin')->user();
         return response()->json([
             "success" => true,
-            "message" => "Get Authenticate admin",
+            "message" => "Get Authenticate admin.",
             "data" => $admin
         ]);
     }

@@ -64,16 +64,15 @@ class UserController extends Controller
         // $user = Auth::guard('user')->user();
         $user = auth()->guard('user')->user();
         if ($user) {
-            # code...
             return response()->json([
                 "success" => true,
-                "message" => "Get Authenticate user",
+                "message" => "Get Authenticate user.",
                 "data" => $user
             ]);
         } else {
             return response()->json([
                 "success" => false,
-                "message" => "Not get Authenticate user"
+                "message" => "Not get Authenticate user."
             ]);
         }
     }
@@ -83,7 +82,7 @@ class UserController extends Controller
         auth()->guard('user')->logout();
         return response()->json([
             "success" => true,
-            "message" => "Logout Done",
+            "message" => "Logout Done.",
         ]);
     }
 }
