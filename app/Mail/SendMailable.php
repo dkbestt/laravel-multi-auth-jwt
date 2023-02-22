@@ -31,7 +31,7 @@ class SendMailable extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Send Mailable',
+            subject: 'Send For Testing',
         );
     }
 

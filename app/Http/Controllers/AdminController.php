@@ -53,7 +53,7 @@ class AdminController extends Controller
             ]);
         } else {
             try {
-                Mail::to("divyangkanpariya083@gmail.com")->send(new SendMailable($admin->name));
+                // Mail::to("divyangkanpariya083@gmail.com")->send(new SendMailable($admin->name));
                 return response()->json([
                     "success" => true,
                     "message" => "Login Done",

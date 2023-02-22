@@ -1,1 +1,1 @@
-<h2>{{$name}} Your profile verified successfully.</h2>
+<h2>{{$name}} : Your profile verified successfully.</h2>
