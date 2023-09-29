@@ -7,7 +7,7 @@ use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AdminController extends Controller
 {
@@ -53,7 +53,7 @@ class AdminController extends Controller
             ]);
         } else {
             try {
-                // Mail::to("divyangkanpariya083@gmail.com")->send(new SendMailable($admin->name));
+                Mail::to("divyangkanpariya083@gmail.com")->send(new SendMailable($admin->name));
                 return response()->json([
                     "success" => true,
                     "message" => "Login Done",
